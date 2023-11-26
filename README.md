@@ -23,7 +23,6 @@ After setup, it is recommended you update this README to describe your custom im
 > **Note**
 > Everywhere in this repository, make sure to replace `miabbott/infidelicious-ublue` with the details of your own repository. Unless you used one of the automatic repository setup tools in which case the previous repo identifier should already be your repo's details.
 
-
 > **Warning**
 > To start, you *must* create a branch called `live` which is exclusively for your customizations. That is the **only** branch the GitHub workflow will deploy to your container registry. Don't make any changes to the original "template" branch. It should remain untouched. By using this branch structure, you ensure a clear separation between your own "published image" branch, your development branches, and the original upstream "template" branch. Periodically sync and fast-forward the upstream "template" branch to the most recent revision. Then, simply rebase your `live` branch onto the updated template to effortlessly incorporate the latest improvements into your own repository, without the need for any messy, manual "merge commits".
 
@@ -49,7 +48,6 @@ To rebase an existing Silverblue/Kinoite installation to the latest build:
 - First rebase to the unsigned image, to get the proper signing keys and policies installed:
   ```
   rpm-ostree rebase ostree-unverified-registry:ghcr.io/miabbott/infidelicious-ublue:latest
-
   ```
 - Reboot to complete the rebase:
   ```
