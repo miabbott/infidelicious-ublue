@@ -21,6 +21,7 @@ modules:
     repos:
       - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     install:
+      - cockpit
       - edk2-ovmf
       - guestfs-tools
       - ifuse
