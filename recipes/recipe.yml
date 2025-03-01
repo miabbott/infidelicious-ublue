@@ -36,5 +36,8 @@ modules:
       - waydroid-selinux
 
   - type: default-flatpaks
+    system:
+      install:
+        - org.localsend.localsend_app
 
   - type: signing
