@@ -25,8 +25,9 @@ modules:
       - libvirt
       - lm_sensors
       - qemu-kvm
-      - swtpm
+      - ramalama
       - restic
+      - swtpm
       - tailscale
       - virt-install
       - virt-manager
