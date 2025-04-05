@@ -32,6 +32,8 @@ modules:
       - virt-install
       - virt-manager
       - virt-viewer
+      - xorg-x11-drv-nvidia
+      - xorg-x11-drv-nvidia-cuda
     remove:
       - waydroid
       - waydroid-selinux
