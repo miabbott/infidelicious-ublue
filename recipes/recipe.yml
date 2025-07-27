@@ -36,9 +36,12 @@ modules:
       - waydroid
       - waydroid-selinux
 
+
   - type: default-flatpaks
-    system:
-      install:
-        - org.localsend.localsend_app
+      configurations:
+       - notify: false
+         scope: system
+         install:
+          - org.localsend.localsend_app
 
   - type: signing
