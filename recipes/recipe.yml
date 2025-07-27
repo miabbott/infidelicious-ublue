@@ -9,11 +9,6 @@ image-version: 42 # latest is also supported if you want new updates ASAP
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
-  - type: files
-    files:
-      - source: system
-        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
-
   - type: rpm-ostree
     repos:
       - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
@@ -38,10 +33,10 @@ modules:
 
 
   - type: default-flatpaks
-      configurations:
-       - notify: false
-         scope: system
-         install:
+    configurations:
+      - notify: false
+        scope: system
+        install:
           - org.localsend.localsend_app
 
   - type: signing
