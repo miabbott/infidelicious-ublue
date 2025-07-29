@@ -19,7 +19,6 @@ modules:
       - ifuse
       - libvirt
       - lm_sensors
-      - nvidia-vaapi-driver
       - qemu-kvm
       - ramalama
       - restic
