@@ -13,25 +13,28 @@ modules:
 
   - type: dnf
     repos:
-      - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+      files:
+        - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     install:
-      - cockpit
-      - edk2-ovmf
-      - guestfs-tools
-      - ifuse
-      - libvirt
-      - lm_sensors
-      - qemu-kvm
-      - ramalama
-      - restic
-      - swtpm
-      - tailscale
-      - virt-install
-      - virt-manager
-      - virt-viewer
+      packages:
+        - cockpit
+        - edk2-ovmf
+        - guestfs-tools
+        - ifuse
+        - libvirt
+        - lm_sensors
+        - qemu-kvm
+        - ramalama
+        - restic
+        - swtpm
+        - tailscale
+        - virt-install
+        - virt-manager
+        - virt-viewer
     remove:
-      - waydroid
-      - waydroid-selinux
+      packages:
+        - waydroid
+        - waydroid-selinux
 
   - type: default-flatpaks
     configurations:
