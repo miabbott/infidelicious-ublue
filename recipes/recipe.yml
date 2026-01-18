@@ -11,7 +11,7 @@ image-version: latest # latest is also supported if you want new updates ASAP
 modules:
   - from-file: common-nordvpn.yml
 
-  - type: rpm-ostree
+  - type: dnf
     repos:
       - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     install:
@@ -32,7 +32,6 @@ modules:
     remove:
       - waydroid
       - waydroid-selinux
-
 
   - type: default-flatpaks
     configurations:
