@@ -1,9 +1,8 @@
 name: bluebuild
 on:
   schedule:
-    - cron:
-        "00 06 * * *" # build at 06:00 UTC every day
-        # (20 minutes after last ublue images start building)
+    - cron: "00 06 * * *" # build at 06:00 UTC every day
+                          # (20 minutes after last ublue images start building)
   push:
     paths-ignore: # don't rebuild if only documentation has changed
       - "**.md"
@@ -29,14 +28,50 @@ jobs:
           # !! Add your recipes here
           - recipe.yml
     steps:
-      # the build is fully handled by the reusable github action
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Get image name from recipe
+        id: recipe
+        run: |
+          IMAGE_NAME=$(yq '.name' "recipes/${{ matrix.recipe }}")
+          echo "image_name=${IMAGE_NAME}" >> $GITHUB_OUTPUT
+          echo "Image name: ${IMAGE_NAME}"
+
+      - name: Capture current latest image
+        id: previous-image
+        env:
+          IMAGE: ghcr.io/${{ github.repository_owner }}/${{ steps.recipe.outputs.image_name }}:latest
+        run: |
+          if skopeo inspect "docker://${IMAGE}" > /dev/null 2>&1; then
+            DIGEST=$(skopeo inspect "docker://${IMAGE}" --format '{{.Digest}}')
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "ref=ghcr.io/${{ github.repository_owner }}/${{ steps.recipe.outputs.image_name }}@${DIGEST}" >> $GITHUB_OUTPUT
+            echo "Captured previous image: ${DIGEST}"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "No previous :latest image found"
+          fi
+
       - name: Build Custom Image
-        uses: blue-build/github-action@v1.10
+        uses: blue-build/github-action@v1.11
         with:
           recipe: ${{ matrix.recipe }}
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
           registry_token: ${{ github.token }}
           pr_event_number: ${{ github.event.number }}
-
-          # enabled by default, disable if your image is small and you want faster builds
           maximize_build_space: true
+
+      - name: Compare package changes
+        if: steps.previous-image.outputs.exists == 'true'
+        uses: miabbott/compare-bootc-images@v1
+        with:
+          old_image: ${{ steps.previous-image.outputs.ref }}
+          new_image: ghcr.io/${{ github.repository_owner }}/${{ steps.recipe.outputs.image_name }}:latest
+
+      - name: No comparison available
+        if: steps.previous-image.outputs.exists != 'true'
+        run: |
+          echo "## Package Changes" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "No previous image available for comparison (first build)." >> $GITHUB_STEP_SUMMARY
