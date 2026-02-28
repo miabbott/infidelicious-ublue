@@ -19,6 +19,7 @@ modules:
       packages:
         - cockpit
         - edk2-ovmf
+        - gamemode
         - guestfs-tools
         - ifuse
         - libvirt
