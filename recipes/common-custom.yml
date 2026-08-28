@@ -3,11 +3,14 @@ modules:
     repos:
       files:
         - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+        - https://cli.github.com/packages/rpm/gh-cli.repo
     install:
       packages:
         - cockpit
         - edk2-ovmf
         - gamemode
+        - gh
+        - glab
         - guestfs-tools
         - ifuse
         - libvirt
