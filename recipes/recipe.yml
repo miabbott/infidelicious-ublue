@@ -1,47 +1,18 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 # image will be published to ghcr.io/<user>/<name>
 name: infidelicious-ublue
 # description will be included in the image's metadata
-description: A starting point for further customization of uBlue images. Make your own! https://ublue.it/making-your-own/
+description: A custom Bazzite image with additional development and virtualization tools
 # the base image to build on top of (FROM) and the version tag to use
 base-image: ghcr.io/ublue-os/bazzite-gnome
-image-version: latest # latest is also supported if you want new updates ASAP
+image-version: latest
 
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
   - from-file: common-nordvpn.yml
 
-  - type: dnf
-    repos:
-      files:
-        - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
-    install:
-      packages:
-        - cockpit
-        - edk2-ovmf
-        - gamemode
-        - guestfs-tools
-        - ifuse
-        - libvirt
-        - lm_sensors
-        - qemu-kvm
-        - ramalama
-        - restic
-        - swtpm
-        - tailscale
-        - virt-install
-        - virt-manager
-        - virt-viewer
-    remove:
-      packages:
-        - waydroid
-        - waydroid-selinux
-
-  - type: default-flatpaks
-    configurations:
-      - notify: false
-        scope: system
-        install:
-          - org.localsend.localsend_app
+  - from-file: common-custom.yml
 
   - type: signing
