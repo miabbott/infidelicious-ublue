@@ -1,10 +1,12 @@
 modules:
-  - type: rpm-ostree
+  - type: dnf
     repos:
-      - nordvpn.repo
+      files:
+        - nordvpn.repo
     install:
-      - nordvpn
-      - nordvpn-gui
+      packages:
+        - nordvpn
+        - nordvpn-gui
   - type: systemd
     system:
       enabled:
