@@ -5,8 +5,6 @@ modules:
     install:
       - nordvpn
       - nordvpn-gui
-    optfix:
-      - nordvpn-gui
   - type: systemd
     system:
       enabled:
